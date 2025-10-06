@@ -1,0 +1,234 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: url('./img/mars-background.jpg') center/cover, linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.language-switcher {
+    margin-bottom: 40px;
+}
+
+.lang-btn {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    margin: 0 10px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.lang-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.lang-btn.active {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    transform: translateY(-2px);
+}
+
+.content {
+    margin-bottom: 30px;
+}
+
+.main-text {
+    margin-bottom: 30px;
+    color: #444;
+    text-align: left;
+}
+
+.main-text p {
+    margin-bottom: 20px;
+}
+
+.body-text {
+    font-size: 20px;
+    line-height: 1.2;
+    color: #444;
+    white-space: pre-line;
+    margin-top: 20px;
+}
+
+.body-text::before {
+    content: "";
+    display: block;
+    margin-bottom: 10px;
+}
+
+.coffee-link {
+    color: #e74c3c;
+    font-weight: bold;
+    text-decoration: underline;
+    position: relative;
+}
+
+/* Простая прямая стрелка влево */
+.coffee-link::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 33vw;
+    height: 3px;
+    background: #e74c3c;
+    margin-top: 5px;
+    transform: rotate(-5deg);
+    transform-origin: right center;
+    z-index: 1000;
+}
+
+/* Наконечник стрелки слева */
+.coffee-link::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: calc(33vw - 10px);
+    width: 0;
+    height: 0;
+    border-right: 12px solid #e74c3c;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    margin-top: calc(-2px + 33vw * 0.087); /* смещение по вертикали для угла 5 градусов */
+    transform: rotate(-5deg);
+    z-index: 1001;
+}
+
+.first-paragraph {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.intro-text {
+    font-size: 24px;
+    line-height: 1.3;
+    color: #444;
+    flex: 1;
+    min-width: 250px;
+    font-weight: 600;
+}
+
+.kofi-button {
+    flex-shrink: 0;
+}
+
+.main-text p:first-child {
+    margin-bottom: 30px;
+}
+
+.static-image {
+    max-width: 600px;
+    margin: 30px auto;
+    text-align: center;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.static-image img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    display: block;
+    background: white;
+}
+
+.social-links {
+    margin-bottom: 40px;
+}
+
+.social-btn {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    margin: 0 10px;
+    border-radius: 50%;
+    background: #f8f9fa;
+    color: #333;
+    text-decoration: none;
+    line-height: 60px;
+    font-size: 24px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.social-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.social-btn.facebook { background: #3b5998; color: white; }
+.social-btn.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
+.social-btn.linkedin { background: #0077b5; color: white; }
+.social-btn.twitter { background: #1da1f2; color: white; }
+.social-btn.github { background: #333; color: white; }
+.social-btn.proz { background: #0066cc; color: white; }
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    .lang-btn {
+        padding: 12px 20px;
+        font-size: 16px;
+        margin: 5px;
+    }
+    
+    .intro-text {
+        font-size: 20px;
+    }
+    
+    .body-text {
+        font-size: 18px;
+    }
+    
+    .first-paragraph {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .social-btn {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 20px;
+        margin: 5px;
+    }
+}

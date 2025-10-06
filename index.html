@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Igor – Translator</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💾</text></svg>">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="language-switcher">
+            <button class="lang-btn" data-lang="ru">RU</button>
+            <button class="lang-btn" data-lang="et">ET</button>
+            <button class="lang-btn active" data-lang="en">EN</button>
+        </div>
+        
+        <!-- Content Section -->
+        <div class="content">
+            <div class="main-text">
+                <div class="first-paragraph">
+                    <span class="intro-text" id="intro-text">I'm Igor, I'm a translator.</span>
+                </div>
+                
+                <!-- Static image -->
+                <div class="static-image">
+                    <img src="./img/missing_en.png" alt="Image" id="main-image">
+                </div>
+                
+                <div class="body-text" id="body-text">I translate from English and Estonian into Russian in a human way.
+
+I also dabble a bit in Python, various C languages, JavaScript, HTML, CSS, and so on.
+
+You can offer me a project or <span class="coffee-link">just buy me coffee</span>.</div>
+            </div>
+        </div>
+        
+        <!-- Social Links -->
+        <div class="social-links">
+            <a href="#" class="social-btn facebook" title="Facebook" target="_blank">f</a>
+            <a href="#" class="social-btn instagram" title="Instagram" target="_blank">📷</a>
+            <a href="#" class="social-btn linkedin" title="LinkedIn" target="_blank">in</a>
+            <a href="#" class="social-btn twitter" title="X (Twitter)" target="_blank">X</a>
+            <a href="#" class="social-btn github" title="GitHub" target="_blank">💻</a>
+            <a href="#" class="social-btn proz" title="ProZ" target="_blank">P</a>
+        </div>
+    </div>
+
+    <!-- Ko-fi Overlay Widget -->
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+    <script>
+      kofiWidgetOverlay.draw('garryq', {
+        'type': 'floating-chat',
+        'floating-chat.donateButton.text': 'Support me',
+        'floating-chat.donateButton.background-color': 'f45d22',
+        'floating-chat.donateButton.text-color': '#fff'
+      });
+      
+      // Store reference to Ko-fi widget for coffee-link functionality
+      window.kofiWidget = kofiWidgetOverlay;
+      
+      // Alternative method: Listen for Ko-fi widget ready event
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          // Try to find Ko-fi elements after they're loaded
+          const kofiBtn = document.querySelector('.floatingchat-container-wrap button');
+          if (kofiBtn) {
+            console.log('Ko-fi button found and ready');
+            window.kofiButton = kofiBtn;
+          }
+        }, 1000);
+      });
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
