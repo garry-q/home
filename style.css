@@ -8,7 +8,7 @@ body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     color: #333;
-    background: url('./img/mars-background.jpg') center/cover, linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -93,7 +93,7 @@ body {
     position: relative;
 }
 
-/* Простая прямая стрелка влево */
+/* Simple straight arrow pointing left */
 .coffee-link::after {
     content: '';
     position: absolute;
@@ -108,7 +108,7 @@ body {
     z-index: 1000;
 }
 
-/* Наконечник стрелки слева */
+/* Arrow tip on the left */
 .coffee-link::before {
     content: '';
     position: absolute;
@@ -119,8 +119,37 @@ body {
     border-right: 12px solid #e74c3c;
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
-    margin-top: calc(-2px + 33vw * 0.087); /* смещение по вертикали для угла 5 градусов */
+    margin-top: calc(-2px + 33vw * 0.087); /* vertical offset for 5 degree angle */
     transform: rotate(-5deg);
+    z-index: 1001;
+}
+
+/* Second arrow pointing right - dynamically added via JavaScript */
+.coffee-link-second-arrow {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 33vw;
+    height: 3px;
+    background: #e74c3c;
+    margin-top: 5px;
+    transform: rotate(5deg);
+    transform-origin: left center;
+    z-index: 1000;
+}
+
+/* Second arrow tip on the right */
+.coffee-link-second-arrow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -12px;
+    width: 0;
+    height: 0;
+    border-left: 12px solid #e74c3c;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    transform: translateY(-50%);
     z-index: 1001;
 }
 

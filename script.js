@@ -67,6 +67,23 @@ function updateContent(lang) {
         
         if (bodyText && langData.body_text) {
             bodyText.innerHTML = langData.body_text.replace(/\n/g, '<br>');
+            
+            // Add second arrow to coffee-link after updating content
+            setTimeout(() => {
+                const coffeeLink = bodyText.querySelector('.coffee-link');
+                if (coffeeLink) {
+                    // Remove existing second arrow if any
+                    const existingSecondArrow = coffeeLink.querySelector('.coffee-link-second-arrow');
+                    if (existingSecondArrow) {
+                        existingSecondArrow.remove();
+                    }
+                    
+                    // Create second arrow element
+                    const secondArrow = document.createElement('div');
+                    secondArrow.className = 'coffee-link-second-arrow';
+                    coffeeLink.appendChild(secondArrow);
+                }
+            }, 100);
         }
         
         if (mainImage && langData.image) {
