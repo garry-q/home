@@ -12,12 +12,16 @@
     --arrow-angle-deg: 5;
     --arrow-length: 33vw;
     --arrow-slope: 0.087; /* ~tan(5deg) */
+    /* Widget placement defaults (overridden from settings) */
+    --widget-margin: 18px;
+    --widget-height: 58px;
 }
 
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     color: #333;
+    /* Fallback gradient; JS augments with background image on top */
     background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
     min-height: 100vh;
     display: flex;
@@ -288,4 +292,115 @@ body {
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     z-index: 1001;
+}
+
+/* PayPal button fixed near bottom-left, offset to the right of Ko-fi bubble */
+.paypal-btn {
+    position: fixed;
+    left: var(--widget-margin, 18px);
+    /* place above floating bubbles on bottom edge */
+    bottom: calc(var(--widget-margin, 18px) + var(--widget-height, 58px) + 10px);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #0070ba;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    opacity: 0.9;
+    transition: all 0.25s ease;
+    /* Ensure above third-party floating widgets */
+    z-index: 2147483647;
+}
+
+.paypal-btn:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+}
+
+.paypal-logo {
+    width: 22px;
+    height: auto;
+}
+
+/* Crypto container and buttons (bottom-right, above right-side widget) */
+#crypto-container {
+    position: fixed;
+    right: var(--widget-margin, 18px);
+    bottom: calc(var(--widget-margin, 18px) + var(--widget-height, 58px) + 10px);
+    display: flex;
+    gap: 10px;
+    z-index: 2147483646; /* slightly under PayPal to avoid overlap concerns */
+}
+
+.crypto-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    color: #333;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    transition: all 0.25s ease;
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.crypto-btn:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+}
+
+.crypto-logo {
+    width: 20px;
+    height: 20px;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    text-align: center;
+    width: 150px;
+}
+
+.crypto-btn:hover .tooltip {
+    display: block;
+}
+
+.tooltip img {
+    width: 120px;
+    height: 120px;
+    border-radius: 6px;
+}
+
+.address {
+    display: block;
+    font-size: 12px;
+    color: #555;
+    margin-top: 6px;
+    word-break: break-all;
+}
+
+.copy-text {
+    font-size: 11px;
+    color: #c00;
+    margin-top: 4px;
+    user-select: none;
 }

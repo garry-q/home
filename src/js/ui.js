@@ -5,6 +5,12 @@ export function applyThemeVariables(settings) {
   if (t.gradient_start) root.style.setProperty('--gradient-start', t.gradient_start);
   if (t.gradient_end) root.style.setProperty('--gradient-end', t.gradient_end);
   if (t.accent) root.style.setProperty('--accent', t.accent);
+  if (typeof t.widget_margin === 'number') {
+    root.style.setProperty('--widget-margin', `${t.widget_margin}px`);
+  }
+  if (typeof t.widget_height === 'number') {
+    root.style.setProperty('--widget-height', `${t.widget_height}px`);
+  }
   if (typeof t.arrow_angle_deg === 'number') {
     root.style.setProperty('--arrow-angle-deg', String(t.arrow_angle_deg));
     // precompute radians and slope factor used in tip vertical offset (tan(angle))
