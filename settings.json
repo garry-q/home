@@ -1,7 +1,18 @@
 {
   "default_language": "en",
-  "background_image": "CuriosityMarsSurface.jpg",
   "favicon": "💾",
+  "version": "251013a",
+  "theme": {
+    "gradient_start": "#667eea",
+    "gradient_end": "#764ba2",
+    "accent": "#e74c3c",
+    "arrow_angle_deg": 5,
+    "arrow_length_vw": 33,
+    "container_bg_alpha": 0.75,
+    "widget_margin": 18,
+    "widget_height": 58,
+    "background_image": "CuriosityMarsSurface.jpg"
+  },
   "social_links": {
     "facebook": "https://www.facebook.com/igor.kuldmaa",
     "instagram": "https://www.instagram.com/qyrraq/", 
@@ -12,18 +23,18 @@
   },
   "languages": {
     "en": {
-      "intro_text": "I'm Igor, I'm a translator.",
-      "body_text": "<p align=right><a href = 'https://m.me/igor.kuldmaa' target='_blank'>m.me/igor.kuldmaa</a> && <a href = 'mailto:igor.kuldmaa@gmail.com' target='_blank'>igor.kuldmaa@gmail.com</a></p>I translate from English and Estonian into Russian in a human way.\n\nI also dabble a bit in Python, various C languages, JavaScript, HTML, CSS, and so on.\n\nYou can offer me a project or <span class=\"coffee-link\">just buy me coffee</span>.",
+      "intro_text": "I'm Igor, I'm an editor and translator.",
+  "body_text": "<p class='right-links'><a href = 'https://m.me/igor.kuldmaa' target='_blank'>m.me/igor.kuldmaa</a> && <a href = 'mailto:igor.kuldmaa@gmail.com' target='_blank'>igor.kuldmaa@gmail.com</a></p>I translate from English and Estonian into Russian in a human way.\n\nI also dabble a bit in Python, C languages, JavaScript, HTML, CSS, and so on.\n\nYou can offer me a project or <span class=\"coffee-link\">just buy me coffee</span>.",
       "image": "missing_en.png"
     },
     "et": {
-      "intro_text": "Olen Igor, olen tõlkija.",
-      "body_text": "<p align=right><a href = 'https://m.me/igor.kuldmaa' target='_blank'>m.me/igor.kuldmaa</a> && <a href = 'mailto:igor.kuldmaa@gmail.com' target='_blank'>igor.kuldmaa@gmail.com</a></p>Tõlgin inglise ja eesti keelest vene keelde inimlikul viisil.\n\nTegelen ka natuke Pythoni, erinevate C keelte, JavaScripti, HTML-i, CSS-i ja muuga.\n\nVõite mulle projekti pakkuda või <span class=\"coffee-link\">lihtsalt kohvi osta</span>.",
+      "intro_text": "Olen Igor, olen toimetaja ja tõlkija.",
+  "body_text": "<p class='right-links'><a href = 'https://m.me/igor.kuldmaa' target='_blank'>m.me/igor.kuldmaa</a> && <a href = 'mailto:igor.kuldmaa@gmail.com' target='_blank'>igor.kuldmaa@gmail.com</a></p>Tõlgin inglise ja eesti keelest vene keelde inimlikul viisil.\n\nTegelen ka natuke Pythoni, C keelte, JavaScripti, HTML-i, CSS-i ja muuga.\n\nVõite mulle projekti pakkuda või <span class=\"coffee-link\">lihtsalt kohvi osta</span>.",
       "image": "missing_et.png"
     },
     "ru": {
-      "intro_text": "Я Игорь, я переводчик.",
-      "body_text": "<p align=right><a href = 'https://m.me/igor.kuldmaa' target='_blank'>m.me/igor.kuldmaa</a> && <a href = 'mailto:igor.kuldmaa@gmail.com' target='_blank'>igor.kuldmaa@gmail.com</a></p>По-человечески перевожу с английского и эстонского на русский.\n\nНемного также на Python, всякие C, JavaScript, HTML, CSS и т. п.\n\nВы можете предложить мне проект или <span class=\"coffee-link\">просто купить кофе</span>.",
+      "intro_text": "Я Игорь, я редактор и переводчик.",
+  "body_text": "<p class='right-links'><a href = 'https://m.me/igor.kuldmaa' target='_blank'>m.me/igor.kuldmaa</a> && <a href = 'mailto:igor.kuldmaa@gmail.com' target='_blank'>igor.kuldmaa@gmail.com</a></p>По-человечески перевожу с английского и эстонского на русский.\n\nНемного также на Python, всякие C, JavaScript, HTML, CSS и т. п.\n\nВы можете предложить мне проект или <span class=\"coffee-link\">просто купить кофе</span>.",
       "image": "missing_ru.png"
     }
   }

@@ -4,11 +4,21 @@
     box-sizing: border-box;
 }
 
+:root {
+    --gradient-start: #667eea;
+    --gradient-end: #764ba2;
+    --accent: #e74c3c;
+    /* Arrow defaults; can be overridden by settings via JS */
+    --arrow-angle-deg: 5;
+    --arrow-length: 33vw;
+    --arrow-slope: 0.087; /* ~tan(5deg) */
+}
+
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     color: #333;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -20,12 +30,16 @@ body {
 .container {
     max-width: 800px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.75);
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
     padding: 40px;
     text-align: center;
     backdrop-filter: blur(10px);
+}
+
+.right-links {
+    text-align: right;
 }
 
 .language-switcher {
@@ -87,7 +101,7 @@ body {
 }
 
 .coffee-link {
-    color: #e74c3c;
+    color: var(--accent);
     font-weight: bold;
     text-decoration: underline;
     position: relative;
@@ -99,11 +113,11 @@ body {
     position: absolute;
     top: 100%;
     right: 0;
-    width: 33vw;
+    width: var(--arrow-length, 33vw);
     height: 3px;
-    background: #e74c3c;
+    background: var(--accent);
     margin-top: 5px;
-    transform: rotate(-5deg);
+    transform: rotate(calc(-1 * var(--arrow-angle-deg, 5) * 1deg));
     transform-origin: right center;
     z-index: 1000;
 }
@@ -113,43 +127,13 @@ body {
     content: '';
     position: absolute;
     top: 100%;
-    right: calc(33vw - 10px);
+    right: calc(var(--arrow-length, 33vw) - 10px);
     width: 0;
     height: 0;
-    border-right: 12px solid #e74c3c;
+    border-right: 12px solid var(--accent);
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
-    margin-top: calc(-2px + 33vw * 0.087); /* vertical offset for 5 degree angle */
-    transform: rotate(-5deg);
-    z-index: 1001;
-}
-
-/* Second arrow pointing right - dynamically added via JavaScript */
-.coffee-link-second-arrow {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 33vw;
-    height: 3px;
-    background: #e74c3c;
-    margin-top: 5px;
-    transform: rotate(5deg);
-    transform-origin: left center;
-    z-index: 1000;
-}
-
-/* Second arrow tip on the right */
-.coffee-link-second-arrow::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: -12px;
-    width: 0;
-    height: 0;
-    border-left: 12px solid #e74c3c;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    transform: translateY(-50%);
+    margin-top: calc(-2px + var(--arrow-length, 33vw) * var(--arrow-slope, 0.087)); /* vertical offset for current angle */
     z-index: 1001;
 }
 
@@ -260,4 +244,48 @@ body {
         font-size: 20px;
         margin: 5px;
     }
+}
+
+/* Small version badge */
+.version-badge {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -26px; /* sits just below the container */
+    z-index: 2;
+    font-size: 12px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.3px;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* CSS-only second arrow attached to inner span */
+.coffee-link .link-text::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: var(--arrow-length, 33vw);
+    height: 3px;
+    background: var(--accent);
+    margin-top: 5px;
+    transform: rotate(calc(var(--arrow-angle-deg, 5) * 1deg));
+    transform-origin: left center;
+    z-index: 1000;
+}
+
+.coffee-link .link-text::before {
+    content: '';
+    position: absolute;
+    top: calc(100% + var(--arrow-length, 33vw) * var(--arrow-slope, 0.087) - 2px);
+    left: calc(var(--arrow-length, 33vw) - 10px);
+    width: 0;
+    height: 0;
+    border-left: 12px solid var(--accent);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    z-index: 1001;
 }
