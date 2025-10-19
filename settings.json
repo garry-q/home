@@ -1,7 +1,11 @@
 {
   "default_language": "en",
   "favicon": "💾",
-  "version": "251013b",
+  "version": "251019a-",
+  "site": {
+    "base_url": "http://home.test/",
+    "og_image": "https://igorq.com/img/missing_en.png"
+  },
   "theme": {
     "gradient_start": "#667eea",
     "gradient_end": "#764ba2",
@@ -13,29 +17,55 @@
     "widget_height": 58,
     "background_image": "CuriosityMarsSurface.jpg"
   },
+  "donations": {
+    "paypal_url": "https://paypal.me/igorkuldmaa",
+    "crypto": [
+      {
+        "symbol": "BTC",
+        "name": "Bitcoin",
+        "address": "3KSQdk3n9P4AtQyWJaaNgdwPFmpwq7vURX",
+        "qr": "btc.png",
+        "color": "#f7931a",
+        "svgPath": "M20.8 14.8c.3-2-1.2-3-3.2-3.7l.7-2.9-1.8-.4-.7 2.8-1.4-.3.7-2.8-1.8-.4-.7 2.9-1.1-.3v1.8h.8c.4 0 .5.3.4.6l-1.1 4.2c-.1.3-.4.4-.7.4h-.8v1.8l1.2.3-.7 2.9 1.8.4.7-2.9 1.4.3-.7 2.9 1.8.4.7-2.9c2 .4 3.5.3 4.1-1.5.4-1.2 0-2.1-.8-2.8.9-.4 1.5-1 1.7-2.2zm-3 4.3c-.4 1.4-2.8.6-3.6.4l.7-2.6c.8.2 3.4.5 2.9 2.2zm.4-4.2c-.4 1.3-2.3.6-2.9.4l.6-2.3c.6.1 2.7.3 2.3 1.9z"
+      },
+      {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "address": "0x0004E89df2acFa37f7Fc32338AB789F9251D4E85",
+        "qr": "eth.png",
+        "color": "#627eea",
+        "svgPath": "M16 5l7 12-7-4-7 4 7-12zm0 22-7-10 7 4 7-4-7 10z"
+      }
+    ]
+  },
   "social_links": {
     "facebook": "https://www.facebook.com/igor.kuldmaa",
     "instagram": "https://www.instagram.com/qyrraq/", 
     "linkedin": "https://www.linkedin.com/in/igor-kuldmaa-97292510/",
     "twitter": "https://x.com/garry_q",
-    "github": "https://github.com/garry-q",
-    "proz": "https://www.proz.com/profile/3825217"
+    "github": "https://github.com/garry-q"
+  },
+  "analytics": {
+    "ga_id": "G-C0SRZMPZLY"
   },
   "languages": {
     "en": {
       "intro_text": "I'm Igor, I'm an editor and translator.",
   "body_text": "<p class='right-links'><a href = 'https://m.me/igor.kuldmaa' target='_blank'>m.me/igor.kuldmaa</a> && <a href = 'mailto:igor.kuldmaa@gmail.com' target='_blank'>igor.kuldmaa@gmail.com</a></p>I translate from English and Estonian into Russian in a human way.\n\nI also dabble a bit in Python, C languages, JavaScript, HTML, CSS, and so on.\n\nYou can offer me a project or <span class=\"coffee-link\">just buy me coffee</span>.",
-      "image": "missing_en.png"
+      "image": "missing_en.png",
+      "pages": {}
     },
     "et": {
       "intro_text": "Olen Igor, olen toimetaja ja tõlkija.",
   "body_text": "<p class='right-links'><a href = 'https://m.me/igor.kuldmaa' target='_blank'>m.me/igor.kuldmaa</a> && <a href = 'mailto:igor.kuldmaa@gmail.com' target='_blank'>igor.kuldmaa@gmail.com</a></p>Tõlgin inglise ja eesti keelest vene keelde inimlikul viisil.\n\nTegelen ka natuke Pythoni, C keelte, JavaScripti, HTML-i, CSS-i ja muuga.\n\nVõite mulle projekti pakkuda või <span class=\"coffee-link\">lihtsalt kohvi osta</span>.",
-      "image": "missing_et.png"
+      "image": "missing_et.png",
+      "pages": {}
     },
     "ru": {
       "intro_text": "Я Игорь, я редактор и переводчик.",
   "body_text": "<p class='right-links'><a href = 'https://m.me/igor.kuldmaa' target='_blank'>m.me/igor.kuldmaa</a> && <a href = 'mailto:igor.kuldmaa@gmail.com' target='_blank'>igor.kuldmaa@gmail.com</a></p>По-человечески перевожу с английского и эстонского на русский.\n\nНемного также на Python, всякие C, JavaScript, HTML, CSS и т. п.\n\nВы можете предложить мне проект или <span class=\"coffee-link\">просто купить кофе</span>.",
-      "image": "missing_ru.png"
+      "image": "missing_ru.png",
+      "pages": {}
     }
   }
 }

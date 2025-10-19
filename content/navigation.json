@@ -1,0 +1,10 @@
+{
+  "items": [
+    { "slug": "about",    "label": {"en": "About",   "ru": "Обо мне",     "et": "Minust"   } },
+    { "slug": "land",     "label": {"en": "Land",    "ru": "Визитка",     "et": "Reklaam" } },
+    { "slug": "projects", "label": {"en": "Pro",     "ru": "Проекты",     "et": "Projektid"} },
+    { "slug": "poems",    "label": {"en": "Poems",   "ru": "Стихи",       "et": "Luule"   } },
+    { "slug": "education","label": {"en": "Edu",     "ru": "Образование", "et": "Haridus" } },
+    { "slug": "support",  "label": {"en": "Support", "ru": "Поддержка",   "et": "Toeta"   } }
+  ]
+}

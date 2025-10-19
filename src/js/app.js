@@ -10,11 +10,14 @@ async function loadSettings() {
   applyThemeVariables(settings);
   // Apply background image (from theme only)
   const bgImage = settings.theme?.background_image;
-  if (bgImage) {
+  if (bgImage && !document.body.dataset.ssr) {
     document.body.style.background = `url('./img/${bgImage}') center/cover, linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%)`;
   }
   updateSocialLinks(settings);
-  renderVersionBadge(settings);
+  // In SSR mode, version badge is rendered in PHP footer
+  if (!document.body.dataset.ssr) {
+    renderVersionBadge(settings);
+  }
 }
 
 function wireLangButtons() {
@@ -40,7 +43,10 @@ function switchLanguage(lang) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadSettings();
-  wireLangButtons();
-  const initialLang = getLanguageFromURL(settings);
-  switchLanguage(initialLang);
+  // Skip client-side i18n handling when SSR is active
+  if (!document.body.dataset.ssr) {
+    wireLangButtons();
+    const initialLang = getLanguageFromURL(settings);
+    switchLanguage(initialLang);
+  }
 });

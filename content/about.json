@@ -1,0 +1,8 @@
+{
+  "title": {"en": "About", "ru": "Обо мне", "et": "Minust"},
+  "body_html": {
+    "en": "<p>Information about Igor Kuldmaa will be here.</p>",
+    "ru": "<p>Информация об Игоре Кулдмаа будет здесь.</p>",
+    "et": "<p>Informatsioon Igor Kuldmaa kohta tuleb siia.</p>"
+  }
+}

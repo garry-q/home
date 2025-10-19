@@ -15,20 +15,52 @@
     /* Widget placement defaults (overridden from settings) */
     --widget-margin: 18px;
     --widget-height: 58px;
+    /* Layout safe areas */
+    --header-height: 64px;
+    --footer-safe: 140px;
 }
 
 body {
     font-family: 'Arial', sans-serif;
-    line-height: 1.6;
+    line-height: 1.2;
     color: #333;
     /* Fallback gradient; JS augments with background image on top */
     background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    background-attachment: fixed; /* Make background image fixed */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* place content near top */
     align-items: center;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
+    padding-top: calc(var(--header-height, 64px) + 4px);
+    padding-bottom: var(--footer-safe, 140px);
+}
+
+/* Fixed header & footer scaffolding */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between; /* nav left, language right */
+    padding: 8px 0; /* a bit tighter to reduce top space */
+    z-index: 2147483600;
+    pointer-events: none;
+}
+.site-header .language-switcher { pointer-events: auto; margin-right: 20px; }
+.site-header .site-nav { pointer-events: auto; margin-left: 16px; display: flex; flex-direction: column; gap: 6px; }
+.site-header .nav-link { color: #fff; text-decoration: none; background: rgba(0,0,0,0.25); padding: 6px 10px; border-radius: 8px; font-weight: 600; }
+.site-header .nav-link.active { background: rgba(0,0,0,0.45); }
+
+.site-footer {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    display: block; /* donations only; socials moved inside content */
+    padding: 8px 0;
+    z-index: 2147483600;
+    pointer-events: none; /* default off; enable on buttons below */
 }
 
 .container {
@@ -47,23 +79,33 @@ body {
 }
 
 .language-switcher {
-    margin-bottom: 40px;
+    margin-bottom: 0;
 }
 
 .lang-btn {
     background: linear-gradient(45deg, #667eea, #764ba2);
     color: white;
     border: none;
-    padding: 15px 30px;
-    margin: 0 10px;
+    padding: 8px 14px; /* half size */
+    margin: 0 8px;
     border-radius: 50px;
-    font-size: 18px;
+    font-size: 14px; /* half size */
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.lang-btn:link,
+.lang-btn:visited,
+.lang-btn:hover,
+.lang-btn:active {
+    text-decoration: none;
+    color: #fff;
 }
 
 .lang-btn:hover {
@@ -186,34 +228,47 @@ body {
 }
 
 .social-links {
-    margin-bottom: 40px;
+    display: flex;
+    gap: 10px;
+    margin: 0;
 }
 
 .social-btn {
-    display: inline-block;
-    width: 60px;
-    height: 60px;
-    margin: 0 10px;
+    display: inline-flex;
+    width: 46px;
+    height: 46px;
+    margin: 0;
     border-radius: 50%;
-    background: #f8f9fa;
-    color: #333;
+    background: rgba(248,249,250,0.95);
+    color: #fff;
     text-decoration: none;
-    line-height: 60px;
-    font-size: 24px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
 }
 
 .social-btn:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
-.social-btn.facebook { background: #3b5998; color: white; }
-.social-btn.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
-.social-btn.linkedin { background: #0077b5; color: white; }
-.social-btn.twitter { background: #1da1f2; color: white; }
-.social-btn.github { background: #333; color: white; }
+.social-btn.facebook { background: #3b5998; }
+.social-btn.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+.social-btn.linkedin { background: #0077b5; }
+.social-btn.twitter { background: #1da1f2; }
+.social-btn.github { background: #333; }
+.social-btn svg { width: 22px; height: 22px; fill: currentColor; color: #fff; }
+
+.footer-center { display: none; }
+.footer-version { font-size: 12px; }
+
+/* Unified content footer directly under the card (no background) */
+.content-footer-global { width: 100%; display: flex; justify-content: center; margin-top: 12px; }
+.content-footer-inner { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.content-footer-inner .social-links { display: flex; gap: 10px; }
+.content-footer-inner .footer-version { color: rgba(0,0,0,0.7); text-shadow: none; }
 .social-btn.proz { background: #0066cc; color: white; }
 
 @media (max-width: 768px) {
@@ -299,7 +354,7 @@ body {
     position: fixed;
     left: var(--widget-margin, 18px);
     /* place above floating bubbles on bottom edge */
-    bottom: calc(var(--widget-margin, 18px) + var(--widget-height, 58px) + 10px);
+    bottom: calc(var(--widget-margin, 18px) + var(--widget-height, 58px) + 14px);
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -315,6 +370,7 @@ body {
     transition: all 0.25s ease;
     /* Ensure above third-party floating widgets */
     z-index: 2147483647;
+    pointer-events: auto; /* enable clicks */
 }
 
 .paypal-btn:hover {
@@ -332,10 +388,11 @@ body {
 #crypto-container {
     position: fixed;
     right: var(--widget-margin, 18px);
-    bottom: calc(var(--widget-margin, 18px) + var(--widget-height, 58px) + 10px);
+    bottom: calc(var(--widget-margin, 18px) + var(--widget-height, 58px) + 14px);
     display: flex;
     gap: 10px;
     z-index: 2147483646; /* slightly under PayPal to avoid overlap concerns */
+    pointer-events: auto; /* enable clicks */
 }
 
 .crypto-btn {
@@ -403,4 +460,142 @@ body {
     color: #c00;
     margin-top: 4px;
     user-select: none;
+}
+
+/* Poems layout */
+.poems-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    min-height: 400px;
+}
+
+.poems-nav {
+    flex: 0 0 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: sticky;
+    top: calc(var(--header-height, 64px) + 20px);
+    align-self: flex-start;
+    max-height: calc(100vh - var(--header-height, 64px) - 40px);
+    overflow-y: auto;
+}
+
+.poems-nav h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #444;
+    line-height: 1.2;
+}
+
+.poems-alphabet {
+    display: none;
+}
+
+.poems-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.alphabet-group-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: #333;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    padding: 4px 0;
+    line-height: 1.2;
+}
+
+.poem-title-link {
+    padding: 3px 0 3px 12px;
+    text-decoration: none;
+    color: #555;
+    font-size: 13px;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+    line-height: 1.2;
+    text-align: left;
+}
+
+.poem-title-link:hover {
+    border-left-color: var(--accent);
+    background: rgba(0,0,0,0.05);
+    padding-left: 16px;
+}
+
+.poems-timeline {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
+    max-height: calc(100vh - var(--header-height, 64px) - 40px);
+    padding-right: 8px;
+}
+
+.letter-anchor {
+    height: 1px;
+    margin: 0;
+}
+
+.poem-item {
+    background: rgba(255,255,255,0.5);
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+}
+.poem-item {
+    background: rgba(255,255,255,0.5);
+    padding: 16px;
+    padding-left: 24px;
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+}
+
+.poem-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.poem-title {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+    line-height: 1.2;
+}
+
+.poem-date {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.2;
+}
+
+.poem-body {
+    color: #444;
+    line-height: 1.2;
+    white-space: pre-line;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .poems-container {
+        flex-direction: column;
+    }
+    
+    .poems-nav {
+        position: static;
+        flex: none;
+        max-height: none;
+    }
+    
+    .poems-timeline {
+        max-height: none;
+    }
 }

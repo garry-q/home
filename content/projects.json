@@ -1,0 +1,8 @@
+{
+  "title": {"en": "Projects", "ru": "Проекты", "et": "Projektid"},
+  "body_html": {
+    "en": "<p>My projects will be listed here.</p>",
+    "ru": "<p>Мои проекты будут перечислены здесь.</p>",
+    "et": "<p>Minu projektid loetletakse siin.</p>"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "title": {"en": "Education", "ru": "Образование", "et": "Haridus"},
+  "body_html": {
+    "en": "<p>Education and certifications will be shown here.</p>",
+    "ru": "<p>Образование и сертификаты будут показаны здесь.</p>",
+    "et": "<p>Haridus ja sertifikaadid näidatakse siin.</p>"
+  }
+}

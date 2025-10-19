@@ -1,0 +1,8 @@
+{
+  "title": {"en": "Poems", "ru": "Стихи", "et": "Luule"},
+  "body_html": {
+    "en": "<p>Poems will appear here in a chronological timeline.</p>",
+    "ru": "<p>Стихи появятся здесь в хронологической ленте.</p>",
+    "et": "<p>Luuletused ilmuvad siia kronoloogilises joones.</p>"
+  }
+}

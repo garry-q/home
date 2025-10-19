@@ -1,0 +1,9 @@
+{
+  "title": {"en": "I'm Igor, I'm an editor and translator.", "ru": "Я Игорь, я редактор и переводчик.", "et": "Olen Igor, olen toimetaja ja tõlkija."},
+  "body_html": {
+    "en": "<p class='right-links'><a href='https://m.me/igor.kuldmaa' target='_blank'>m.me/igor.kuldmaa</a> && <a href='mailto:igor.kuldmaa@gmail.com' target='_blank'>igor.kuldmaa@gmail.com</a></p>I translate from English and Estonian into Russian in a human way.\n\nI also dabble a bit in Python, C languages, JavaScript, HTML, CSS, and so on.\n\nYou can offer me a project or <span class='coffee-link'><span class='link-text'>just buy me coffee</span></span>.",
+    "ru": "<p class='right-links'><a href='https://m.me/igor.kuldmaa' target='_blank'>m.me/igor.kuldmaa</a> && <a href='mailto:igor.kuldmaa@gmail.com' target='_blank'>igor.kuldmaa@gmail.com</a></p>По-человечески перевожу с английского и эстонского на русский.\n\nНемного также на Python, всякие C, JavaScript, HTML, CSS и т. п.\n\nВы можете предложить мне проект или <span class='coffee-link'><span class='link-text'>просто купить кофе</span></span>.",
+    "et": "<p class='right-links'><a href='https://m.me/igor.kuldmaa' target='_blank'>m.me/igor.kuldmaa</a> && <a href='mailto:igor.kuldmaa@gmail.com' target='_blank'>igor.kuldmaa@gmail.com</a></p>Tõlgin inglise ja eesti keelest vene keelde inimlikul viisil.\n\nTegelen ka natuke Pythoni, C keelte, JavaScripti, HTML-i, CSS-i ja muuga.\n\nVõite mulle projekti pakkuda või <span class='coffee-link'><span class='link-text'>lihtsalt kohvi osta</span></span>."
+  },
+  "image": {"en": "missing_en.png", "ru": "missing_ru.png", "et": "missing_et.png"}
+}
