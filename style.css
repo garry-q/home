@@ -18,6 +18,8 @@
     /* Layout safe areas */
     --header-height: 64px;
     --footer-safe: 140px;
+    /* Allow slight overlap of content under fixed header to remove visible gap */
+    --content-top-adjust: 8px; /* overridden from settings */
 }
 
 body {
@@ -32,9 +34,11 @@ body {
     flex-direction: column;
     justify-content: flex-start; /* place content near top */
     align-items: center;
-    padding: 0 20px 20px 20px;
-    padding-top: calc(var(--header-height, 64px) + 4px);
+    padding: 0 8px 20px 8px; /* tighter side gutters */
+    /* Pull content slightly under header to eliminate the yellow band */
+    padding-top: calc(var(--header-height, 64px) - var(--content-top-adjust, 8px));
     padding-bottom: var(--footer-safe, 140px);
+    overflow-x: hidden; /* prevent horizontal scroll on window */
 }
 
 /* Fixed header & footer scaffolding */
@@ -64,12 +68,20 @@ body {
 }
 
 .container {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(var(--header-height, 64px) - var(--content-top-adjust, 8px));
+    max-height: calc(100vh - (var(--header-height, 64px) - var(--content-top-adjust, 8px)) - 8px);
+    overflow: visible; /* allow decorative elements like arrows to render fully */
+    display: grid;
+    grid-template-rows: 1fr auto; /* content + social/version */
     max-width: 800px;
     width: 100%;
     background: rgba(255, 255, 255, 0.75);
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-    padding: 40px;
+    padding: 10px 20px;
     text-align: center;
     backdrop-filter: blur(10px);
 }
@@ -119,7 +131,15 @@ body {
 }
 
 .content {
-    margin-bottom: 30px;
+    margin: 0;
+    min-height: 0; /* allow grid child to shrink */
+    overflow-y: auto; /* inner scroll area */
+    overflow-x: hidden; /* no horizontal scroll inside the card */
+}
+
+/* On the land page, content fits and we want no inner scrollbar */
+.page-land .content {
+    overflow-y: visible;
 }
 
 .main-text {
@@ -165,7 +185,7 @@ body {
     margin-top: 5px;
     transform: rotate(calc(-1 * var(--arrow-angle-deg, 5) * 1deg));
     transform-origin: right center;
-    z-index: 1000;
+    z-index: 2147483648; /* ensure front-most on land page */
 }
 
 /* Arrow tip on the left */
@@ -180,7 +200,7 @@ body {
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     margin-top: calc(-2px + var(--arrow-length, 33vw) * var(--arrow-slope, 0.087)); /* vertical offset for current angle */
-    z-index: 1001;
+    z-index: 2147483649; /* above everything including floating widgets */
 }
 
 .first-paragraph {
@@ -333,7 +353,7 @@ body {
     margin-top: 5px;
     transform: rotate(calc(var(--arrow-angle-deg, 5) * 1deg));
     transform-origin: left center;
-    z-index: 1000;
+    z-index: 2147483648;
 }
 
 .coffee-link .link-text::before {
@@ -346,7 +366,7 @@ body {
     border-left: 12px solid var(--accent);
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
-    z-index: 1001;
+    z-index: 2147483649;
 }
 
 /* PayPal button fixed near bottom-left, offset to the right of Ko-fi bubble */
@@ -469,9 +489,8 @@ body {
     width: 100%;
     min-height: 400px;
 }
-
 .poems-nav {
-    flex: 0 0 200px;
+    flex: 0 0 250px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -518,6 +537,10 @@ body {
     transition: all 0.2s;
     line-height: 1.2;
     text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
 }
 
 .poem-title-link:hover {
@@ -531,8 +554,9 @@ body {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    overflow-y: auto;
-    max-height: calc(100vh - var(--header-height, 64px) - 40px);
+    /* Let the parent .content manage the scroll */
+    overflow: visible;
+    max-height: none;
     padding-right: 8px;
 }
 
@@ -546,6 +570,8 @@ body {
     padding: 16px;
     border-radius: 8px;
     border-left: 3px solid var(--accent);
+    /* Ensure anchor scroll positions account for fixed header */
+    scroll-margin-top: calc(var(--header-height, 64px) - var(--content-top-adjust, 8px) + 8px);
 }
 .poem-item {
     background: rgba(255,255,255,0.5);
@@ -599,3 +625,14 @@ body {
         max-height: none;
     }
 }
+
+/* Disable CSS-based arrows when overlay is active on land */
+.land-overlay-arrows .coffee-link::before,
+.land-overlay-arrows .coffee-link::after,
+.land-overlay-arrows .coffee-link .link-text::before,
+.land-overlay-arrows .coffee-link .link-text::after {
+    content: none !important;
+}
+
+/* Overlay root; created dynamically by JS on land page */
+#arrow-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 2147483649; }

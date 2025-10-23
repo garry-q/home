@@ -29,9 +29,9 @@ $alphabetIndex = get_alphabet_index($poems);
     <article id="<?= htmlspecialchars($poem['slug']) ?>" class="poem-item">
       <header class="poem-header">
         <h2 class="poem-title"><?= htmlspecialchars($poem['title']) ?></h2>
-        <time class="poem-date" datetime="<?= htmlspecialchars($poem['date']) ?>"><?= htmlspecialchars($poem['date']) ?></time>
+  <time class="poem-date" datetime="<?= htmlspecialchars($poem['dateISO'] ?? '') ?>"><?= htmlspecialchars($poem['date']) ?></time>
       </header>
-      <div class="poem-body"><?= nl2br(htmlspecialchars($poem['body'])) ?></div>
+  <div class="poem-body"><?= htmlspecialchars($poem['body']) ?></div>
     </article>
     <?php endforeach; ?>
     
@@ -42,21 +42,40 @@ $alphabetIndex = get_alphabet_index($poems);
 </div>
 
 <script>
-// Scroll to newest poem (first in list) on load
+// Scroll logic confined to the scrollable poems timeline, not the window
 document.addEventListener('DOMContentLoaded', () => {
-  const firstPoem = document.querySelector('.poem-item');
-  if (firstPoem) {
-    firstPoem.scrollIntoView({ behavior: 'instant', block: 'start' });
+  const timeline = document.querySelector('.poems-timeline');
+  const poems = document.querySelectorAll('.poem-item');
+  const hash = window.location.hash;
+
+  function scrollIntoViewInTimeline(el, behavior = 'instant') {
+    if (!el) return;
+    // Use native behavior so the nearest scrollable ancestor (timeline) scrolls
+    el.scrollIntoView({ behavior, block: 'start' });
   }
-  
-  // Smooth scroll for anchor clicks
+
+  // Initial position: if hash present -> go to that poem; else go to the newest (bottom)
+  if (hash) {
+    const target = document.querySelector(hash);
+    if (target) {
+      // Wait next frame to ensure layout & sizes are ready
+      requestAnimationFrame(() => scrollIntoViewInTimeline(target, 'instant'));
+    }
+  } else if (timeline && poems.length) {
+    const last = poems[poems.length - 1];
+    requestAnimationFrame(() => scrollIntoViewInTimeline(last, 'instant'));
+  }
+
+  // Smooth scroll for anchor clicks inside the page
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       const href = e.currentTarget.getAttribute('href');
       const target = document.querySelector(href);
       if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        scrollIntoViewInTimeline(target, 'smooth');
+        if (history.replaceState) history.replaceState(null, '', href);
+        else location.hash = href;
       }
     });
   });

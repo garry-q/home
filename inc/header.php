@@ -24,7 +24,7 @@ body{background-image: url('./img/<?= htmlspecialchars($bg) ?>'), linear-gradien
     <link rel="preload" as="image" href="./img/<?= htmlspecialchars($bg) ?>"><?php endif; ?>
 <?php require __DIR__ . '/analytics.php'; ?>
 </head>
-<body data-ssr="1">
+<body data-ssr="1" class="page-<?= htmlspecialchars($CURRENT_PAGE) ?>">
         <!-- Fixed header with nav (left) and language (right) -->
         <div class="site-header">
             <?php require __DIR__ . '/nav.php'; ?>

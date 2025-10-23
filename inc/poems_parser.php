@@ -6,11 +6,28 @@
 // body text...
 
 define('POEM_TITLE_MAX_LENGTH', 50);
+define('POEMS_CACHE_FILE', __DIR__ . '/../cache/poems_cache.php');
 
 function parse_poems($filepath) {
     if (!file_exists($filepath)) return [];
     
+    global $SETTINGS;
+    $isDebug = isset($SETTINGS['debug']) && $SETTINGS['debug'];
+    
+    // Check cache (skip in debug mode)
+    $fileCrc = hash_file('crc32', $filepath);
+    $cacheData = null;
+    
+    if (!$isDebug && file_exists(POEMS_CACHE_FILE)) {
+        $cacheData = @include POEMS_CACHE_FILE;
+        if (is_array($cacheData) && isset($cacheData['crc']) && $cacheData['crc'] === $fileCrc) {
+            return $cacheData['poems'];
+        }
+    }
+    
     $content = file_get_contents($filepath);
+    // Normalize line endings to LF to avoid accidental extra blank lines
+    $content = str_replace(["\r\n", "\r"], "\n", $content);
     $blocks = preg_split('/^=== /m', $content, -1, PREG_SPLIT_NO_EMPTY);
     
     $poems = [];
@@ -19,16 +36,23 @@ function parse_poems($filepath) {
         if (empty($lines[0])) continue;
         
         // First line: datetime ===
-        $dateTime = trim(str_replace('===', '', $lines[0]));
+    // Extract and clean date string like "[Sep 25, 2025 9:08:34 am] ==="
+    $dateLine = trim($lines[0]);
+    $dateLine = str_replace('===', '', $dateLine);
+    $dateTime = trim($dateLine, "[] \t");
         $date = '';
+        $dateISO = '';
         $sortKey = '';
         try {
             $dt = new DateTime($dateTime);
-            $date = $dt->format('Y-m-d'); // Date only, no time
-            $sortKey = $dt->format('Y-m-d H:i:s'); // Full for sorting
+            // Display without time, keep timestamp for sorting
+            $date = $dt->format('M d, Y');
+            $dateISO = $dt->format('Y-m-d');
+            $sortKey = $dt->getTimestamp(); // Use timestamp for reliable sorting
         } catch (Exception $e) {
             $date = $dateTime;
-            $sortKey = $dateTime;
+            $dateISO = '';
+            $sortKey = 0;
         }
         
         $title = '';
@@ -37,11 +61,13 @@ function parse_poems($filepath) {
         // Check if second line starts with *
         if (isset($lines[1]) && strpos(trim($lines[1]), '*') === 0) {
             $title = trim(substr(trim($lines[1]), 1));
+            // Remove trailing punctuation from title
+            $title = rtrim($title, '.,:;!?');
             $bodyStartIndex = 2;
         }
         
-        // Body is remaining lines
-        $bodyLines = array_slice($lines, $bodyStartIndex);
+    // Body is remaining lines
+    $bodyLines = array_slice($lines, $bodyStartIndex);
         
         // If title was parsed with *, remove it from body if it appears as first line
         if (!empty($title) && $bodyStartIndex === 2) {
@@ -50,13 +76,13 @@ function parse_poems($filepath) {
                 $bodyLines = array_slice($bodyLines, 1);
             }
         }
+        // Ensure no empty line(s) immediately after the title
+        while (!empty($bodyLines) && trim($bodyLines[0]) === '') {
+            array_shift($bodyLines);
+        }
         
-        // Join and preserve original empty lines from source
-        $body = implode("\n", $bodyLines);
-        
-        // Only remove excessive empty lines (3+ consecutive empty lines become max 2)
-        $body = preg_replace('/(\n\s*){3,}/', "\n\n", $body);
-        $body = trim($body);
+    // Join and preserve original empty lines exactly as in source
+    $body = implode("\n", $bodyLines);
         
         // If no title, use first line of body (max 50 chars)
         if (empty($title) && !empty($body)) {
@@ -64,13 +90,19 @@ function parse_poems($filepath) {
             $title = mb_strlen($firstLine) > POEM_TITLE_MAX_LENGTH 
                 ? mb_substr($firstLine, 0, POEM_TITLE_MAX_LENGTH) . '…' 
                 : $firstLine;
+            // Remove trailing punctuation from auto-generated title too
+            $title = rtrim($title, '.,:;!?…');
+            if (mb_strlen($firstLine) > POEM_TITLE_MAX_LENGTH) {
+                $title .= '…';
+            }
         }
         
         // Generate slug from title
         $slug = transliterate_to_slug($title);
         
         $poems[] = [
-            'date' => $date,
+            'date' => $date, // display only
+            'dateISO' => $dateISO,
             'sortKey' => $sortKey,
             'title' => $title,
             'slug' => $slug,
@@ -78,12 +110,22 @@ function parse_poems($filepath) {
         ];
     }
     
-    // Sort by sortKey descending (newest first)
+    // Sort by sortKey ascending (oldest first); newest will be at the bottom
     usort($poems, function($a, $b) {
-        $aKey = isset($a['sortKey']) ? $a['sortKey'] : $a['date'];
-        $bKey = isset($b['sortKey']) ? $b['sortKey'] : $b['date'];
-        return strcmp($bKey, $aKey);
+        $aKey = isset($a['sortKey']) ? $a['sortKey'] : 0;
+        $bKey = isset($b['sortKey']) ? $b['sortKey'] : 0;
+        return $aKey <=> $bKey; // Numeric comparison
     });
+    
+    // Save to cache (skip in debug mode)
+    if (!$isDebug) {
+        $cacheDir = dirname(POEMS_CACHE_FILE);
+        if (!is_dir($cacheDir)) {
+            @mkdir($cacheDir, 0755, true);
+        }
+        $cacheContent = "<?php\nreturn " . var_export(['crc' => $fileCrc, 'poems' => $poems], true) . ";\n";
+        @file_put_contents(POEMS_CACHE_FILE, $cacheContent);
+    }
     
     return $poems;
 }

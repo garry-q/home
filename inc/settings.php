@@ -9,6 +9,12 @@ if (!isset($SETTINGS['default_language'])) $SETTINGS['default_language'] = 'en';
 if (!isset($SETTINGS['theme'])) $SETTINGS['theme'] = [];
 if (!isset($SETTINGS['social_links'])) $SETTINGS['social_links'] = [];
 if (!isset($SETTINGS['version'])) $SETTINGS['version'] = '';
+if (!isset($SETTINGS['debug'])) $SETTINGS['debug'] = false;
+
+// Set base_url based on debug mode
+$SETTINGS['site']['base_url'] = $SETTINGS['debug'] 
+    ? ($SETTINGS['site']['base_url_dev'] ?? 'http://home.test/')
+    : ($SETTINGS['site']['base_url_prod'] ?? 'https://igorq.com/');
 
 // Helper: get theme var with fallback
 function theme_var($key, $fallback = null) {
@@ -38,5 +44,12 @@ function emit_theme_css_vars() {
     if (is_numeric($wm)) echo '--widget-margin:' . intval($wm) . 'px;';
     $wh = theme_var('widget_height');
     if (is_numeric($wh)) echo '--widget-height:' . intval($wh) . 'px;';
+    // Optional layout tunables
+    $cta = theme_var('content_top_adjust');
+    if (is_numeric($cta)) echo '--content-top-adjust:' . intval($cta) . 'px;';
+    $hh = theme_var('header_height');
+    if (is_numeric($hh)) echo '--header-height:' . intval($hh) . 'px;';
+    $fs = theme_var('footer_safe');
+    if (is_numeric($fs)) echo '--footer-safe:' . intval($fs) . 'px;';
     echo '}';
 }

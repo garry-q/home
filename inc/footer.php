@@ -2,8 +2,10 @@
 global $SETTINGS, $CURRENT_PAGE, $CURRENT_LANG;
 require_once __DIR__ . '/helpers.php';
 ?>
-        </div><!-- /.content -->
-    </div><!-- /.container -->
+    </div><!-- /.content -->
+    <?php // Socials + version now live INSIDE the container as part of the fixed block ?>
+    <?php require __DIR__ . '/content_footer.php'; ?>
+  </div><!-- /.container -->
 
   <!-- Fixed footer with donations only (socials+version now in content) -->
   <footer class="site-footer">
@@ -33,8 +35,6 @@ require_once __DIR__ . '/helpers.php';
 
     </footer>
 
-  <?php // Socials + version directly under the card, no background ?>
-  <?php require __DIR__ . '/content_footer.php'; ?>
 
     <!-- Third-party widgets -->
     <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
@@ -51,5 +51,8 @@ require_once __DIR__ . '/helpers.php';
     <!-- App scripts -->
     <script type="module" src="./src/js/app.js"></script>
     <script type="module" src="./src/js/donations.js"></script>
+    <?php if ($CURRENT_PAGE === 'land'): ?>
+    <script type="module" src="./src/js/land_arrows.js"></script>
+    <?php endif; ?>
   </body>
   </html>
