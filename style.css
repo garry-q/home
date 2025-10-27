@@ -55,8 +55,8 @@ body {
 }
 .site-header .language-switcher { pointer-events: auto; margin-right: 20px; }
 .site-header .site-nav { pointer-events: auto; margin-left: 16px; display: flex; flex-direction: column; gap: 6px; }
-.site-header .nav-link { color: #fff; text-decoration: none; background: rgba(0,0,0,0.25); padding: 6px 10px; border-radius: 8px; font-weight: 600; }
-.site-header .nav-link.active { background: rgba(0,0,0,0.45); }
+.site-header .nav-link { color: #fff; text-decoration: none; background: rgba(0,0,0,0.25); padding: 6px 10px; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; }
+.site-header .nav-link.active { background: linear-gradient(45deg, #ff6b6b, #ee5a24); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
 
 .site-footer {
     position: fixed;
@@ -482,30 +482,38 @@ body {
     user-select: none;
 }
 
-/* Poems layout */
+/* ============================================
+   POEMS LAYOUT - Grid-based with equal height columns
+   ============================================
+   Model: CSS Grid with two columns of equal height
+   - Left column: navigation with sticky behavior and own scroll
+   - Right column: timeline that scrolls with parent .content
+   Both columns have same height thanks to grid
+   ============================================ */
+
 .poems-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 100%;
     gap: 20px;
     width: 100%;
-    min-height: 400px;
+    height: 100%;
+    align-items: stretch;
 }
+
+/* Left navigation column: fixed position with independent scroll */
 .poems-nav {
-    flex: 0 0 250px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    position: sticky;
-    top: calc(var(--header-height, 64px) + 20px);
-    align-self: flex-start;
-    max-height: calc(100vh - var(--header-height, 64px) - 40px);
+    height: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
+    overflow-anchor: none; /* Prevent browser scroll anchoring */
 }
 
 .poems-nav h3 {
-    margin: 0;
-    font-size: 18px;
-    color: #444;
-    line-height: 1.2;
+    display: none; /* Hide "Poems" title */
 }
 
 .poems-alphabet {
@@ -549,15 +557,21 @@ body {
     padding-left: 16px;
 }
 
+.poem-title-link.active {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: #fff;
+    border-left-color: var(--accent);
+    padding-left: 16px;
+}
+
+/* Right timeline column: natural flow with own scroll */
 .poems-timeline {
-    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 24px;
-    /* Let the parent .content manage the scroll */
-    overflow: visible;
-    max-height: none;
     padding-right: 8px;
+    height: 100%;
+    overflow-y: auto;
 }
 
 .letter-anchor {
@@ -568,17 +582,10 @@ body {
 .poem-item {
     background: rgba(255,255,255,0.5);
     padding: 16px;
-    border-radius: 8px;
-    border-left: 3px solid var(--accent);
-    /* Ensure anchor scroll positions account for fixed header */
-    scroll-margin-top: calc(var(--header-height, 64px) - var(--content-top-adjust, 8px) + 8px);
-}
-.poem-item {
-    background: rgba(255,255,255,0.5);
-    padding: 16px;
     padding-left: 24px;
     border-radius: 8px;
     border-left: 3px solid var(--accent);
+    scroll-margin-top: calc(var(--header-height, 64px) - var(--content-top-adjust, 8px) + 8px);
 }
 
 .poem-header {
@@ -612,16 +619,11 @@ body {
 
 @media (max-width: 768px) {
     .poems-container {
-        flex-direction: column;
+        grid-template-columns: 1fr;
     }
     
     .poems-nav {
         position: static;
-        flex: none;
-        max-height: none;
-    }
-    
-    .poems-timeline {
         max-height: none;
     }
 }

@@ -54,5 +54,8 @@ require_once __DIR__ . '/helpers.php';
     <?php if ($CURRENT_PAGE === 'land'): ?>
     <script type="module" src="./src/js/land_arrows.js"></script>
     <?php endif; ?>
+    <?php if ($CURRENT_PAGE === 'poems'): ?>
+    <script type="module" src="./src/js/poems_scroll.js"></script>
+    <?php endif; ?>
   </body>
   </html>
